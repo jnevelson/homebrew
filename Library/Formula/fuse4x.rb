@@ -5,6 +5,8 @@ class Fuse4x < Formula
   url 'https://github.com/fuse4x/fuse.git', :tag => "fuse4x_0_8_14"
   version "0.8.14"
 
+  depends_on :automake
+  depends_on :libtool
   depends_on 'gettext'
   depends_on 'fuse4x-kext'
 
