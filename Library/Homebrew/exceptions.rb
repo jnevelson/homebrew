@@ -65,12 +65,15 @@ class FormulaInstallationAlreadyAttemptedError < Homebrew::InstallationError
   end
 end
 
-class UnsatisfiedRequirement < Homebrew::InstallationError
-  attr :dep
+class UnsatisfiedRequirements < Homebrew::InstallationError
+  attr :reqs
 
-  def initialize formula, dep
-    @dep = dep
-    super formula, "An unsatisfied requirement failed this build."
+  def initialize formula, reqs
+    @reqs = reqs
+    message = (reqs.length == 1) \
+                ? "An unsatisfied requirement failed this build." \
+                : "Unsatisifed requirements failed this build."
+    super formula, message
   end
 end
 
@@ -175,4 +178,12 @@ class ChecksumMismatchError < RuntimeError
   def to_s
     super + advice.to_s
   end
+end
+
+module Homebrew extend self
+  SUDO_BAD_ERRMSG = <<-EOS.undent
+    You can use brew with sudo, but only if the brew executable is owned by root.
+    However, this is both not recommended and completely unsupported so do so at
+    your own risk.
+  EOS
 end
