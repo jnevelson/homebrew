@@ -10,8 +10,8 @@ end
 
 class Sphinx < Formula
   homepage 'http://www.sphinxsearch.com'
-  url 'http://sphinxsearch.com/files/sphinx-2.0.4-release.tar.gz'
-  md5 '7da4df3df3decb24d8c6fb8f47de1d3d'
+  url 'http://sphinxsearch.com/files/sphinx-2.0.5-release.tar.gz'
+  md5 'e71fdb5b0c2911247d48fb30550b9584'
 
   head 'http://sphinxsearch.googlecode.com/svn/trunk/'
 
@@ -74,18 +74,3 @@ class Sphinx < Formula
     EOS
   end
 end
-
-__END__
-diff --git a/configure b/configure
-index aebac75..82d6d05 100755
---- a/configure
-+++ b/configure
-@@ -4361,7 +4361,7 @@ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
- 
- #ifdef __GNUC__
- #if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ > 3)
--void main() {}
-+int main() {}
- #else
- syntax error
- #endif
