@@ -2,8 +2,8 @@ require 'formula'
 
 class Ffmpeg < Formula
   homepage 'http://ffmpeg.org/'
-  url 'http://ffmpeg.org/releases/ffmpeg-0.11.1.tar.bz2'
-  sha1 'bf01742be60c2e6280371fc4189d5d28933f1a56'
+  url 'http://ffmpeg.org/releases/ffmpeg-0.11.2.tar.bz2'
+  sha1 '5d98729b8368df8145472ae6955ef8d6b9ed0efb'
 
   head 'git://git.videolan.org/ffmpeg.git'
 
@@ -26,7 +26,7 @@ class Ffmpeg < Formula
   option 'with-tools', 'Enable additional FFmpeg tools'
 
   # manpages won't be built without texi2html
-  depends_on 'texi2html' => :build if MacOS.mountain_lion?
+  depends_on 'texi2html' => :build if MacOS.version >= :mountain_lion
   depends_on 'yasm' => :build
 
   depends_on 'x264' unless build.include? 'without-x264'
@@ -45,6 +45,7 @@ class Ffmpeg < Formula
   depends_on 'libass' if build.include? 'with-libass'
   depends_on 'openjpeg' if build.include? 'with-openjpeg'
   depends_on 'sdl' if build.include? 'with-ffplay'
+  depends_on 'speex' if build.include? 'with-speex'
 
   def install
     args = ["--prefix=#{prefix}",
@@ -74,10 +75,11 @@ class Ffmpeg < Formula
     args << "--enable-libass" if build.include? 'with-libass'
     args << "--enable-libopenjpeg" if build.include? 'with-openjpeg'
     args << "--enable-ffplay" if build.include? 'with-ffplay'
+    args << "--enable-libspeex" if build.include? 'with-speex'
 
     # For 32-bit compilation under gcc 4.2, see:
     # http://trac.macports.org/ticket/20938#comment:22
-    ENV.append_to_cflags "-mdynamic-no-pic" if MacOS.leopard? or Hardware.is_32_bit?
+    ENV.append_to_cflags "-mdynamic-no-pic" if MacOS.version == :leopard or Hardware.is_32_bit?
 
     system "./configure", *args
 
